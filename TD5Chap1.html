@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="Fr">
+<head>
+    <meta charset="UTF-8">    
+    <title>TD5 chapitre 1</title>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+    <script type="text/javascript">
+        window.addEventListener("load", eventWindowLoaded, false);
+        function eventWindowLoaded(){
+            canvasApp();
+        }
+        function canvasSupport(){
+            return Modernizr.canvas;
+        }
+        function canvasApp(){
+            if (!canvasSupport()){
+                return;
+            }
+             var theCanvas = document.getElementById("canvasOne");
+             var context = theCanvas.getContext("2d");
+             function drawScreen(){
+                // background
+                context.globalAlpha = 1;
+                context.fillStyle = "#000FFF";
+                context.fillRect(0,0,640,480);
+
+                // image
+                context.globalAlpha = .25;
+                context.drawImage(helloWorldImage, 0, 0);
+
+                if (fadeIn){
+                    alpha += .01;
+                    if (alpha >= 1){
+                        alpha = 1; 
+                        fadeIn = false;
+                    }
+                } else {
+                    alpha -= .01;
+                    if (alpha < 0){
+                        alpha = 0;
+                        fadeIn = true;
+                    }
+                }
+
+                //text
+                context.font = "72px Sans-Serif";
+                context.textBaseline = "top";
+                context.globalAlpha = alpha;
+                context.fillStyle = "#000000";
+                context.fillText (text, 150, 200);
+             }
+             var text = "resolution TD 5";
+             var alpha = 0;
+             var fadeIn = true;
+
+             var helloWorldImage = new Image();
+             helloWorldImage.src ="testOk.gif";
+
+             function gameLoop() {
+                window.setTimeout(gameLoop, 20);
+                drawScreen()
+             }
+             gameLoop();
+        }
+
+    </script>
+</head>
+<body>
+    <div style="position: absolute; top: 50px; left: 50px;">
+        <canvas id="canvasOne" width="640" height="480">
+            la solution Td4 chapitre 1
+        </canvas>
+    </div>
+    
+</body>
+</html>
